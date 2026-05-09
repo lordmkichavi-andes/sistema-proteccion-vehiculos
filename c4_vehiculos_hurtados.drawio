@@ -1,0 +1,418 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.2 Chrome/134.0.6998.178 Electron/35.1.2 Safari/537.36" version="26.2.2" pages="2">
+  <diagram name="C4 - Nivel 1 Contexto" id="c4_ctx">
+    <mxGraphModel dx="2719" dy="1858" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title_ctx" value="&lt;b&gt;Diagrama de contexto del sistema&lt;/b&gt;&lt;br&gt;Sistema de detección de vehículos hurtados" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="20" width="600" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="V55esLM379CmAf9aerXf-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ctx_user" target="ctx_sistema">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="590" y="320" />
+              <mxPoint x="590" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V55esLM379CmAf9aerXf-2" value="&lt;div&gt;Busca placas, ve eventos&lt;br&gt;en mapa, recibe alertas&lt;/div&gt;&lt;i&gt;[HTTPS]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="V55esLM379CmAf9aerXf-1">
+          <mxGeometry x="-0.14" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ctx_user" value="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;Usuario policial&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Person]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Investigador o analista que busca placas, recibe alertas y consulta tendencias en mapa.&lt;/div&gt;" style="html=1;fontSize=11;labelBackgroundColor=none;fillColor=#08427B;strokeColor=#073B6F;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];resizable=0;" parent="1" vertex="1">
+          <mxGeometry x="500" y="-20" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="V55esLM379CmAf9aerXf-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ctx_sistema" target="ctx_bd">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="V55esLM379CmAf9aerXf-4" value="&lt;div&gt;Sincroniza listas&lt;br&gt;de vehículos hurtados&lt;/div&gt;&lt;i&gt;[Pull periódico + push]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="V55esLM379CmAf9aerXf-3">
+          <mxGeometry x="-0.1172" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V55esLM379CmAf9aerXf-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="ctx_auth">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="669.9999999999995" y="450" as="sourcePoint" />
+            <mxPoint x="870" y="624.9999999999995" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="670" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V55esLM379CmAf9aerXf-6" value="&lt;div&gt;Valida credenciales&lt;/div&gt;&lt;i&gt;[LDAP / SOAP / REST]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="V55esLM379CmAf9aerXf-5">
+          <mxGeometry x="-0.1111" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V55esLM379CmAf9aerXf-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ctx_sistema" target="ctx_anal">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="500" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V55esLM379CmAf9aerXf-8" value="&lt;div&gt;Publica eventos&lt;br&gt;consolidados&lt;/div&gt;&lt;i&gt;[Streaming / batch]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="V55esLM379CmAf9aerXf-7">
+          <mxGeometry x="-0.5733" y="-1" relative="1" as="geometry">
+            <mxPoint y="55" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ctx_sistema" value="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;Sistema de detección&lt;br&gt;de vehículos hurtados&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Software System]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Recolecta lecturas de placas desde dispositivos de calle, las cruza contra BD policiales y genera alertas y analítica.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#0D5091;fillColor=#1061B0;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="445" y="360" width="280" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="V55esLM379CmAf9aerXf-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ctx_disp" target="ctx_sistema">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="V55esLM379CmAf9aerXf-10" value="&lt;div&gt;Envían lecturas, imágenes,&lt;br&gt;GPS, timestamps&lt;/div&gt;&lt;i&gt;[HTTPS/mTLS sobre GSM]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="V55esLM379CmAf9aerXf-9">
+          <mxGeometry x="-0.0175" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ctx_disp" value="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;Dispositivos de calle&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Software System]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Hardware en vía con cámaras y OCR local. Conectividad GSM intermitente y batería de respaldo.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#6B6B6B;fillColor=#8A8A8A;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="-80" y="360" width="240" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ctx_bd" value="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;BD policiales&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Software System]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Bases de datos de vehículos hurtados de cada país. Formatos y tecnologías heterogéneos.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#6B6B6B;fillColor=#8A8A8A;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="1040" y="360" width="240" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ctx_auth" value="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;Sistemas de auth policiales&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Software System]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Repositorios de identidad por país: LDAP, BD propia, servicios SOAP y/o REST.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#6B6B6B;fillColor=#8A8A8A;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="880" y="720" width="240" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="ctx_anal" value="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;Herramienta de analítica&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Software System]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Plataforma de análisis para zonas de hurto, vías peligrosas y rutas de escape.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#6B6B6B;fillColor=#8A8A8A;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="30" y="720" width="240" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_ctx" value="Leyenda" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;dashed=1;verticalAlign=top;fontStyle=1;fontSize=12;align=left;spacingLeft=8;spacingTop=4;" parent="1" vertex="1">
+          <mxGeometry x="910" y="-130" width="240" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_p" value="Persona" style="html=1;fontSize=10;labelBackgroundColor=none;fillColor=#08427B;strokeColor=#073B6F;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;resizable=0;" parent="1" vertex="1">
+          <mxGeometry x="930" y="-100" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_s" value="Sistema&lt;br&gt;en alcance" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#0D5091;fillColor=#1061B0;align=center;arcSize=10;fontColor=#ffffff;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1001" y="-95" width="60" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_e" value="Sistema&lt;br&gt;externo" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#6B6B6B;fillColor=#8A8A8A;align=center;arcSize=10;fontColor=#ffffff;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1081" y="-95" width="60" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_arrow" value="" style="endArrow=blockThin;html=1;rounded=0;strokeColor=#404040;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="930" y="-10" as="sourcePoint" />
+            <mxPoint x="1121" y="-10" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_arrow_lbl" value="Relación con descripción [tecnología]" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="930" y="-5" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_b" value="Notación: C4 Model (Simon Brown)" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontStyle=2;" parent="1" vertex="1">
+          <mxGeometry x="920" y="35" width="220" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="C4 - Nivel 2 Contenedores" id="c4_cont">
+    <mxGraphModel dx="5533" dy="2750" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title_cont" value="&lt;b&gt;Diagrama de contenedores&lt;/b&gt;&lt;br&gt;Sistema de detección de vehículos hurtados" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="20" width="600" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_user" target="cn_portal" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="1620" />
+              <mxPoint x="260" y="1620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-13" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Usa&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[HTTPS]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-12" vertex="1" connectable="0">
+          <mxGeometry x="-0.3053" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cn_user" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Usuario policial&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Person]&lt;/div&gt;" style="html=1;fontSize=11;labelBackgroundColor=none;fillColor=#08427B;strokeColor=#073B6F;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];resizable=0;" parent="1" vertex="1">
+          <mxGeometry x="170" y="1720" width="180" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_disp" target="cn_edge" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-570" y="460" />
+              <mxPoint x="-570" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-37" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Provee placas, imagen, GPS&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[Local]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-36" vertex="1" connectable="0">
+          <mxGeometry x="-0.5272" y="-1" relative="1" as="geometry">
+            <mxPoint x="44" y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cn_disp" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Dispositivos de calle&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Software System]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Hardware en vía con cámaras y OCR local.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#6B6B6B;fillColor=#8A8A8A;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="-860" y="400" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="cn_bd" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;BD policiales&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Software System]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Listados de hurtados por país.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#6B6B6B;fillColor=#8A8A8A;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="950" y="40" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="cn_authext" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Sistemas de auth policiales&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Software System]&lt;/div&gt;&lt;br&gt;&lt;div&gt;LDAP / SOAP / REST por país.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#6B6B6B;fillColor=#8A8A8A;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="1600" y="1400" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bnd_sys" value="Sistema de detección de vehículos hurtados [Software System]" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;arcSize=20;strokeColor=#666666;fillColor=none;labelBackgroundColor=none;align=left;verticalAlign=top;fontSize=14;fontStyle=2;spacingLeft=10;spacingTop=8;strokeWidth=3;" parent="1" vertex="1">
+          <mxGeometry x="-440" y="250" width="1760" height="1390" as="geometry" />
+        </mxCell>
+        <mxCell id="bnd_edge" value="Edge - en dispositivo [Container Boundary]" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=1 4;arcSize=20;strokeColor=#888888;fillColor=none;labelBackgroundColor=none;align=left;verticalAlign=top;fontSize=12;fontStyle=2;spacingLeft=10;spacingTop=6;" parent="1" vertex="1">
+          <mxGeometry x="80" y="310" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_edge" target="cn_apigw" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="30" y="460" />
+              <mxPoint x="30" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-35" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Sincroniza eventos&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[HTTPS/mTLS sobre GSM]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-34" vertex="1" connectable="0">
+          <mxGeometry x="-0.0779" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cn_edge" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Edge agent&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Container: Go / Rust]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Buffer local FIFO, sync diferida, cache de lista negra y pre-match local.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="-360" y="395" width="280" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_apigw" target="cn_kafka" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="490" y="460" />
+              <mxPoint x="490" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-33" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Publica&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[TCP]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-32" vertex="1" connectable="0">
+          <mxGeometry x="-0.0583" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cn_apigw" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;API gateway&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Container: Kong / Envoy]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Valida mTLS y device ID, rate limiting, enrutado.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="120" y="395" width="280" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_kafka" target="cn_match" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-31" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Consume&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[TCP]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-30" vertex="1" connectable="0">
+          <mxGeometry x="-0.4242" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cn_kafka" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Cola de mensajería&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Container: Kafka]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Desacopla ingesta de procesamiento, garantiza orden y durabilidad.&lt;/div&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;direction=east;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="580" y="395" width="280" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_match" target="cn_obj" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="880" />
+              <mxPoint x="240" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-20" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Guarda imágenes&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[HTTPS]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-19" vertex="1" connectable="0">
+          <mxGeometry x="-0.0098" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_match" target="cn_cache" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="720" />
+              <mxPoint x="720" y="1065" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-22" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Consulta&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[TCP]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-21" vertex="1" connectable="0">
+          <mxGeometry x="-0.1748" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cn_match" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Servicio de matching&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Container: Java / Spring Boot]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Cruza placas contra cache de lista negra. Genera alertas en tiempo casi-real.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="120" y="620" width="280" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_sync" target="cn_cache" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1060" y="900" />
+              <mxPoint x="1060" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-26" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Actualiza&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[TCP]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-25" vertex="1" connectable="0">
+          <mxGeometry x="-0.0904" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_sync" target="cn_bd" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1060" y="440" />
+              <mxPoint x="1060" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-28" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Lee listas&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[Pull/push]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-27" vertex="1" connectable="0">
+          <mxGeometry x="0.0097" relative="1" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cn_sync" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Sync listas hurtados&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Container: Java / Spring Boot]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Sincroniza con BD policiales por país (pull periódico + push).&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="920" y="620" width="280" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="ZUZxXXkGqI9gbeXwSZgX-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_bdev" target="ZUZxXXkGqI9gbeXwSZgX-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZUZxXXkGqI9gbeXwSZgX-3" value="Lee eventos consolidados&lt;br&gt;&lt;em&gt;[JDBC]&lt;/em&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="ZUZxXXkGqI9gbeXwSZgX-2" vertex="1" connectable="0">
+          <mxGeometry x="0.0391" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cn_bdev" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;BD de eventos&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Container: PostgreSQL]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Lecturas, detecciones, alertas. Particionada por país.&lt;/div&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="-320" y="990" width="240" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="cn_obj" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Object storage&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Container: S3 / Blob / GCS]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Imágenes y pruebas visuales con hash de integridad.&lt;/div&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="140" y="990" width="240" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="cn_cache" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Cache lista negra&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Container: Redis]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Lista de vehículos hurtados para matching en milisegundos.&lt;/div&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="920" y="990" width="240" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="1" source="cn_portal" target="cn_bdev" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="40" y="1460" />
+              <mxPoint x="40" y="1065" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-2" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Consulta&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[JDBC]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-1" vertex="1" connectable="0">
+          <mxGeometry x="-0.0134" relative="1" as="geometry">
+            <mxPoint x="1" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_portal" target="cn_obj" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="1270" />
+              <mxPoint x="260" y="1270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-6" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Lee imágenes&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[HTTPS]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-5" vertex="1" connectable="0">
+          <mxGeometry x="0.012" relative="1" as="geometry">
+            <mxPoint x="1" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_portal" target="cn_authgw" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="1460" />
+              <mxPoint x="650" y="1460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-8" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Autentica usuarios&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[OIDC]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-7" vertex="1" connectable="0">
+          <mxGeometry x="-0.0842" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cn_portal" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Portal web&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Container: React + Mapbox]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Búsqueda por placa, mapa de eventos, alertas.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="120" y="1390" width="280" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=0;endArrow=none;" parent="1" source="cn_anal" target="cn_bdev" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-200" y="1260" />
+              <mxPoint x="-200" y="1260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-4" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Lee eventos&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[JDBC]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-3" vertex="1" connectable="0">
+          <mxGeometry x="0.0792" y="1" relative="1" as="geometry">
+            <mxPoint x="1" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZUZxXXkGqI9gbeXwSZgX-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_anal" target="cn_user" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-200" y="1790" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZUZxXXkGqI9gbeXwSZgX-5" value="Presenta dashboards de tendencias&lt;br/&gt;&lt;em&gt;[HTTPS]&lt;/em&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="ZUZxXXkGqI9gbeXwSZgX-4" vertex="1" connectable="0">
+          <mxGeometry x="-0.4504" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cn_anal" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Motor de analítica&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Container: Spark / Superset]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Tendencias, heat maps de hurto, rutas de escape.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="-360" y="1380" width="280" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_authgw" target="cn_authext" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1400" y="1460" />
+              <mxPoint x="1400" y="1460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-10" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Valida credenciales&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[LDAP / SOAP / REST]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-9" vertex="1" connectable="0">
+          <mxGeometry x="0.0018" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cn_authgw" value="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;Auth gateway federado&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Container: Keycloak]&lt;/div&gt;&lt;br&gt;&lt;div&gt;OIDC/SAML hacia el portal, adaptadores LDAP/SOAP/REST hacia las policías.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="920" y="1390" width="300" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_cont" value="Leyenda" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;dashed=1;verticalAlign=top;fontStyle=1;fontSize=12;align=left;spacingLeft=8;spacingTop=4;" parent="1" vertex="1">
+          <mxGeometry x="3180" y="850" width="380" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2_p" value="Persona" style="html=1;fontSize=10;labelBackgroundColor=none;fillColor=#08427B;strokeColor=#073B6F;fontColor=#ffffff;shape=mxgraph.c4.person2;align=center;resizable=0;" parent="1" vertex="1">
+          <mxGeometry x="3200" y="880" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2_c" value="Container" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;arcSize=10;fontColor=#ffffff;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="3260" y="885" width="80" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2_db" value="Container DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;labelBackgroundColor=none;strokeColor=#0E7DAD;fillColor=#23A2D9;align=center;fontColor=#ffffff;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="3360" y="885" width="80" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2_e" value="Sistema externo" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#6B6B6B;fillColor=#8A8A8A;align=center;arcSize=10;fontColor=#ffffff;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="3460" y="885" width="90" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2_bnd" value="Boundary&lt;br&gt;(sistema o agrupación)" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;arcSize=20;strokeColor=#666666;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontStyle=2;" parent="1" vertex="1">
+          <mxGeometry x="3200" y="950" width="350" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2_arrow" value="" style="endArrow=blockThin;html=1;rounded=0;strokeColor=#404040;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="3200" y="1030" as="sourcePoint" />
+            <mxPoint x="3540" y="1030" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg2_arrow_lbl" value="Relación con descripción [tecnología/protocolo]" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="3200" y="1035" width="340" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2_b" value="Notación: C4 Model — Nivel 2 (Container)&lt;br&gt;Cada container es una unidad desplegable independiente.&lt;br&gt;Ramp azul = en alcance · Ramp gris = externo." style="text;html=1;align=left;verticalAlign=top;fontSize=10;fontStyle=2;" parent="1" vertex="1">
+          <mxGeometry x="3190" y="1070" width="380" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cn_match" target="cn_bdev" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-200" y="690" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4g134g4WoPyfqaAqlwny-18" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;Persiste eventos&lt;/div&gt;&lt;i style=&quot;font-size: 10px;&quot;&gt;[JDBC]&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="4g134g4WoPyfqaAqlwny-17" vertex="1" connectable="0">
+          <mxGeometry x="0.2995" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZUZxXXkGqI9gbeXwSZgX-1" value="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;Herramienta de analítica&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[Software System]&lt;/div&gt;&lt;br&gt;&lt;div&gt;Plataforma de análisis para zonas de hurto, vías peligrosas y rutas de escape.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#6B6B6B;fillColor=#8A8A8A;align=center;arcSize=10;fontColor=#ffffff;fontSize=11;metaEdit=1;" parent="1" vertex="1">
+          <mxGeometry x="-880" y="990" width="240" height="150" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
