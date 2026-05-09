@@ -3,7 +3,7 @@
 
 ---
 
-## 1. Resumen de la Propuesta
+## 📄 1. Resumen de la Propuesta
 
 Ceiba requiere una plataforma que apoye a las entidades policiales de múltiples países a combatir el hurto de vehículos, identificando tendencias y facilitando la recuperación de unidades robadas. La solución debe operar sobre dispositivos de calle con severas restricciones de hardware (2 cores, 1 GB RAM, 16 GB de disco), conectividad GSM intermitente y energía inestable que puede fallar hasta cuatro horas con apenas una hora de batería de respaldo, integrarse con bases de datos policiales heterogéneas por país y con sistemas de autenticación dispares (LDAP, BD propia, SOAP, REST), correr sobre cualquier nube pública o privada, escalar dinámicamente desde Latinoamérica hasta el mundo, garantizar alta disponibilidad y proteger la comunicación contra dispositivos o personas no autorizados.
 
@@ -11,7 +11,7 @@ La solución propuesta se resuelve con una arquitectura distribuida que reparte 
 
 ---
 
-## 2. Arquitectura de la Solución
+## 🏗️ 2. Arquitectura de la Solución
 
 La arquitectura se documenta en cinco diagramas. Los dos primeros siguen la notación C4 y describen el sistema en sus dos primeros niveles (contexto y contenedores). Los tres siguientes son diagramas técnicos complementarios que profundizan en el comportamiento dinámico ante fallas, la topología de despliegue y la integración federada de identidad.
 
@@ -89,7 +89,7 @@ Hay dos consecuencias de este diseño que vale la pena destacar. La primera es q
 
 ---
 
-## 3. Componentes Principales
+## 🧩 3. Componentes Principales
 
 A continuación se describen los componentes que conforman la solución, agrupados por capa lógica, con énfasis en la responsabilidad concreta de cada uno frente a los requisitos del caso.
 
@@ -109,7 +109,7 @@ A continuación se describen los componentes que conforman la solución, agrupad
 
 ---
 
-## 4. Decisiones de Diseño
+## 🎯 4. Decisiones de Diseño
 
 **Procesamiento en el borde con sincronización diferida.** El requisito de no-pérdida de datos ante cortes de GSM y energía, dadas las restricciones documentadas en el enunciado (cobertura intermitente, una hora de batería frente a cortes de hasta cuatro horas), hace inviable depender exclusivamente del procesamiento central. La decisión es darle inteligencia local al dispositivo: buffer FIFO persistente como invariante absoluto, pre-match local contra una cache cacheada de la lista negra, retry con backoff exponencial para no agotar batería, y shutdown ordenado con flush final cuando la batería baja del quince por ciento. Como alternativa se evaluó el envío inmediato sin buffer local; se descartó porque garantiza pérdida de datos en los escenarios que el enunciado documenta como recurrentes.
 
@@ -127,7 +127,7 @@ A continuación se describen los componentes que conforman la solución, agrupad
 
 ---
 
-## 5. Consideraciones de Calidad
+## ✅ 5. Consideraciones de Calidad
 
 **Disponibilidad.** Cada región opera de forma independiente sobre Kubernetes con réplicas múltiples por servicio. El despliegue es multi-AZ dentro de cada proveedor cloud, lo que tolera la caída de una zona sin interrupción de servicio. El RTO objetivo es menor a quince minutos. La caída de una región no afecta a las demás dada la arquitectura de aislamiento por país.
 
@@ -147,7 +147,7 @@ A continuación se describen los componentes que conforman la solución, agrupad
 
 ---
 
-## 6. Supuestos
+## 📌 6. Supuestos
 
 La propuesta se desarrolló sobre los siguientes supuestos, que en un caso real se validarían con la Gerencia de Tecnología de Ceiba antes del diseño final.
 
