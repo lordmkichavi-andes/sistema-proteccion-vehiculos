@@ -27,7 +27,7 @@ Más allá del flujo de datos, el diagrama establece dos integraciones que tiene
 
 ### 2.2. Diagrama de contenedores
 
-![Diagrama de contenedores](images/contenedor.jpg)
+![Diagrama de contenedores](images/contenedor2.jpg)
 
 El diagrama de contenedores abre el sistema y muestra cómo se resuelve internamente cada una de las capacidades que el contexto establece.
 
