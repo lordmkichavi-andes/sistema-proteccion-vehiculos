@@ -20,18 +20,27 @@ La arquitectura se documenta en cinco diagramas. Los dos primeros siguen la nota
 ![Diagrama de contexto del sistema](images/contexto.jpg)
 
 Este diagrama muestra el sistema como una plataforma de detección que conecta tres realidades operativas distintas: los dispositivos en las calles que ven los vehículos pasar, las bases de datos de las policías que saben cuáles fueron hurtados, y los investigadores que necesitan esa información para actuar.
+
 El flujo central es el siguiente: los dispositivos de calle capturan cada vehículo que transita, extraen la matrícula mediante OCR local y envían esa lectura al sistema. El sistema la cruza contra los listados de vehículos hurtados que cada policía nacional mantiene en su propia base de datos. Cuando hay coincidencia, alerta al usuario policial con la fecha, el lugar y la prueba visual de dónde fue visto ese vehículo. Cuando no hay coincidencia, el evento queda registrado y disponible para que un investigador pueda buscar cualquier matrícula en el futuro y reconstruir su historial de apariciones en el mapa.
+
 Más allá del flujo de datos, el diagrama establece dos integraciones que tienen impacto directo en el diseño interno. La primera es con los sistemas de autenticación de cada institución policial: como las policías de distintos países usan tecnologías diferentes (LDAP, bases de datos propias, servicios SOAP, servicios REST), el sistema no puede asumir un solo protocolo de login y debe adaptarse a cada uno sin imponer cambios en las instituciones. La segunda es con la herramienta de analítica: los datos recolectados desde los dispositivos no sirven solo para alertas individuales, sino que consolidados permiten identificar zonas donde más vehículos hurtados transitan, vías recurrentes de escape y patrones temporales de hurto, información que apoya la inteligencia policial estratégica más allá de la interceptación operativa inmediata.
 
 ### 2.2. Diagrama de contenedores
 
 ![Diagrama de contenedores](images/contenedor.jpg)
 
+El diagrama de contenedores abre el sistema y muestra cómo se resuelve internamente cada una de las capacidades que el contexto establece.
+
 La captura desde los dispositivos la maneja el Edge Agent, que corre directamente dentro del hardware de cada cámara de calle. No es un componente pasivo: persiste cada lectura localmente en disco antes de intentar enviarla, ejecuta un primer cruce contra una copia local de la lista de hurtados para identificar coincidencias sin depender de la red, y sincroniza con la nube cuando la conexión GSM está disponible. Esta inteligencia en el borde es lo que garantiza que ninguna placa se pierda aunque el dispositivo quede sin red o sin energía por horas.
+
 Una vez los eventos llegan a la nube, el API Gateway los recibe validando que el dispositivo que los envía esté autorizado, y los deposita en una cola de mensajería que desacopla la velocidad de llegada de la velocidad de procesamiento. Esto es crítico porque cuando decenas de dispositivos recuperan conectividad simultáneamente tras una caída de red, el sistema absorbe el pico sin caer. Desde la cola, el Servicio de Matching cruza cada placa contra la lista de hurtados mantenida en cache en memoria, y cuando encuentra una coincidencia genera la alerta y almacena la detección con su prueba visual.
+
 La lista de hurtados que el Servicio de Matching consulta no es estática: el Servicio de Sincronización de Listas la mantiene fresca, jalando periódicamente los registros de las bases de datos policiales de cada país y actualizando la cache. Cuando una policía reporta un hurto reciente, el sistema también soporta un push urgente para que ese vehículo sea detectable de inmediato sin esperar al próximo ciclo de sincronización.
+
 El almacenamiento está dividido en tres stores con propósitos distintos. La base de datos de eventos guarda el historial completo de lecturas, detecciones y alertas, particionado por país y tiempo, y es la fuente que responde la búsqueda por matrícula con toda la trazabilidad del vehículo en el mapa. El object storage guarda las imágenes con hash de integridad, que son la prueba visual que acompaña cada evento. La cache en Redis mantiene la lista negra en memoria para que el matching sea en milisegundos.
+
 La capa de presentación tiene dos componentes con propósitos distintos. El Portal Web sirve la operación diaria del investigador policial: buscar una matrícula, ver en el mapa dónde y cuándo fue visto ese vehículo, ver la foto capturada y recibir alertas activas. El Motor de Analítica sirve la inteligencia estratégica: heat maps de zonas con más hurtos, vías de escape recurrentes y patrones temporales, consolidando la información de todos los dispositivos de todos los países.
+
 Finalmente, el Auth Gateway federado resuelve que cada policía tiene su propio sistema de login. Actúa como intermediario: recibe la solicitud de acceso del usuario, detecta el país, traduce al protocolo que esa policía usa (LDAP, SOAP o REST) y devuelve un token estándar que el portal y los demás servicios reconocen. Para el usuario policial el login es transparente; para el sistema, agregar un nuevo país es simplemente registrar un adaptador nuevo sin tocar ningún otro componente.
 
 ### 2.3. Diagrama de secuencia: flujo del dato
@@ -39,16 +48,20 @@ Finalmente, el Auth Gateway federado resuelve que cada policía tiene su propio 
 ![Diagrama de secuencia - Flujo del dato](images/sec_flujo_del_dato.png)
 
 Se documenta el recorrido completo de una lectura de placa desde el momento en que la cámara captura un vehículo hasta que el sistema genera una alerta o registra el evento para análisis posterior. Lo hace en tres escenarios operativos distintos, porque el sistema debe comportarse correctamente no solo cuando todo funciona, sino también cuando falla la red o se va la energía.
+
 En condiciones normales, el dispositivo captura la imagen, el OCR extrae la matrícula con un score de confianza, y el Edge Agent empaqueta el evento con la placa, la imagen, las coordenadas GPS y el timestamp. Antes de intentar cualquier envío, persiste el evento en el buffer local en disco: este es el paso que garantiza que nada se pierda independientemente de lo que ocurra después. Luego ejecuta un primer cruce local contra la copia cacheada de la lista de hurtados para marcar el evento como prioritario si hay coincidencia, y sincroniza con la nube vía HTTPS con mTLS. El API Gateway valida que el dispositivo esté autorizado y deposita el evento en la cola. Desde ahí el Servicio de Matching cruza la placa contra la lista en memoria: si hay match, genera la alerta al usuario policial y persiste la detección con la prueba visual; si no, registra el evento para el historial. Solo cuando el sistema confirma la recepción con un ACK, el Edge Agent purga esos eventos del buffer local.
+
 Cuando no hay cobertura GSM, el dispositivo no se detiene: sigue capturando placas y acumulándolas en disco. El buffer tiene capacidad para absorber varias horas de capturas sin desbordamiento. Mientras tanto reintenta la conexión con intervalos crecientes para no agotar la batería en esperas infructuosas. Cuando la señal regresa, sincroniza en bloque priorizando primero los eventos marcados como match local, para que las alertas más relevantes lleguen al sistema central antes que el flujo regular.
+
 El escenario más exigente es el corte de energía. La batería da aproximadamente una hora de operación, durante la cual el dispositivo funciona con normalidad. Cuando la carga baja del quince por ciento, ejecuta un cierre ordenado: vuelca el buffer completo al disco y hace un último intento de sincronización antes de apagarse. Cuando la energía regresa, el dispositivo arranca, compara lo que tiene en disco contra el último ACK confirmado por el sistema y sincroniza únicamente el delta pendiente, evitando duplicados y asegurando que no se pierda ninguna lectura del período sin energía.
+
 El invariante que atraviesa los tres escenarios es siempre el mismo: el evento se persiste en disco antes de cualquier intento de envío, y solo se elimina del buffer cuando el sistema confirma que lo recibió. Eso es lo que hace posible garantizar que ninguna placa captada se pierde, sin importar cuánto tiempo dure el corte ni cuántas veces falle el reintento.
 
 ### 2.4. Diagrama de despliegue
 
 ![Diagrama de despliegue](images/despliegue.png)
 
-l diagrama de despliegue muestra dónde corre físicamente cada componente del sistema y cómo se organiza la infraestructura para cumplir con tres exigencias que tienen tensión entre sí: operar en múltiples países respetando que los datos no salgan de cada territorio, poder cambiar de proveedor cloud sin reescribir el sistema, y crecer desde un piloto en Latinoamérica hasta una operación global sin cambiar la arquitectura.
+El diagrama de despliegue muestra dónde corre físicamente cada componente del sistema y cómo se organiza la infraestructura para cumplir con tres exigencias que tienen tensión entre sí: operar en múltiples países respetando que los datos no salgan de cada territorio, poder cambiar de proveedor cloud sin reescribir el sistema, y crecer desde un piloto en Latinoamérica hasta una operación global sin cambiar la arquitectura.
 
 La respuesta a la portabilidad cloud está en dos capas. La primera es Kubernetes como sustrato de ejecución: todos los servicios corren containerizados y Kubernetes es el denominador común entre AWS, Azure, GCP y clusters auto-gestionados en nube privada. La segunda es una capa de abstracción que media el acceso a los servicios de plataforma como el almacenamiento de objetos, la base de datos, la cache y el balanceo de carga. Los servicios de la aplicación nunca hablan directamente con S3, Azure Blob o GCS: hablan con una interfaz portable, y lo que hay detrás es reemplazable por país o por decisión de negocio sin tocar una línea de código. Cambiar de proveedor es un problema de configuración, no de desarrollo.
 
@@ -65,9 +78,13 @@ Los dispositivos de calle aparecen como un deployment node separado porque tiene
 ![Diagrama de secuencia - Autenticación federada](images/sec_auth_federada.png)
 
 El diagrama muestra cómo un usuario policial de cualquier país accede al sistema con sus propias credenciales institucionales, sin que el sistema le imponga un mecanismo de login diferente al que ya usa su policía, y sin que esa heterogeneidad afecte a ningún otro componente interno.
+
 El punto de partida es que cada institución policial gestiona su identidad de forma independiente y con tecnologías distintas. Unas tienen Active Directory con LDAP, otras un servicio corporativo sobre SOAP, otras una API REST moderna. Obligar a cada policía a cambiar su sistema de identidad para integrarse con la plataforma no es viable, y construir cada servicio interno del sistema para que hable con todos los protocolos posibles es un problema que crece sin control a medida que se incorporan nuevos países.
+
 La solución es concentrar toda esa complejidad en un único componente, el Identity Broker, que actúa como intermediario entre el mundo externo y el mundo interno. Hacia afuera habla el protocolo de cada policía. Hacia adentro habla siempre OIDC y SAML, que son los estándares que el portal y el resto de servicios conocen.
+
 Cuando un usuario policial accede al portal e indica su país, el portal redirige la autenticación al broker. El broker identifica qué adaptador corresponde a ese país y lo invoca: si la policía usa LDAP, el adaptador ejecuta un bind y search contra Active Directory; si usa SOAP, construye un request con WS-Security; si usa REST, llama al endpoint con OAuth2 o API key. En los tres casos el adaptador devuelve al broker la identidad del usuario con sus atributos, y el broker emite un JWT estándar con los claims normalizados: quién es el usuario, de qué país, qué rol tiene y qué permisos. Ese token es lo único que el portal y los demás servicios internos necesitan para operar. No saben ni les importa si el usuario se autenticó por LDAP, SOAP o REST.
+
 Hay dos consecuencias de este diseño que vale la pena destacar. La primera es que incorporar un nuevo país al sistema no requiere tocar el portal, el matching, la analítica ni ningún otro componente: solo hay que escribir el adaptador del nuevo protocolo y registrarlo en el broker. La segunda es que el broker no se convierte en un cuello de botella a medida que crece el número de usuarios: una vez emitido el JWT, cada servicio lo valida localmente con la clave pública del broker, sin necesidad de consultarlo en cada llamada. El broker solo interviene en el momento del login, no en cada operación que el usuario realiza después.
 
 ---
